@@ -1,6 +1,8 @@
 using AdvProProject.Components;
 using AdvProProject.Components.Account;
 using AdvProProject.Data;
+using AdvProProject.Data.Models;
+using AdvProProject.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,7 @@ namespace AdvProProject
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddScoped<IService<Events>, EventsService>();
 
             builder.Services.AddDbContextFactory<ApplicationDbContext>((DbContextOptionsBuilder options) => options.UseSqlServer(connectionString));
 

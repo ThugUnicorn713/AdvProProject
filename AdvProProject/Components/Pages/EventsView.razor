@@ -1,0 +1,48 @@
+﻿@page "/Events"
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Events> eventsService
+
+<PageTitle>Events View</PageTitle>
+
+<h3>Events View</h3>
+
+
+<EditForm FormName="Form" Model=@events OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="NameInput">Name</label>
+    <InputText id="NameInput" @bind-Value="@events.Name"/>
+
+    <label for="DescriptInput">Description</label>
+    <InputText id="DescriptInput" @bind-Value="@events.Description"/>
+
+    <label for="DateTimeInput">Date and Time</label>
+    <input id="DateTimeInput" type="datetime-local" @bind="@events.DateTime" />
+
+    <button type="submit" class="btn-primary">Create</button>
+
+
+</EditForm>
+
+
+@code {
+
+    Events events { get; set; } = new Events();
+
+    public void HandleSubmit()
+    {
+        // Logging for debugging
+        Console.WriteLine($"Name: {events.Name}");
+        Console.WriteLine($"Description: {events.Description}");
+        Console.WriteLine($"DateTime: {events.DateTime}");
+
+        eventsService.Add(events);
+
+        events = new Events(); //clears form
+    }
+
+
+    
+}
