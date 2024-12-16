@@ -9,14 +9,14 @@
 
 
 <EditForm FormName="Form" Model=@events OnValidSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+   
 
     <label for="NameInput">Name</label>
-    <InputText id="NameInput" @bind-Value="@events.Name"/>
+    <InputText id="NameInput" @bind-Value="@events.Name"></InputText>
 
     <label for="DescriptInput">Description</label>
-    <InputText id="DescriptInput" @bind-Value="@events.Description"/>
+    <InputText id="DescriptInput" @bind-Value="@events.Description"></InputText>
+
 
     <label for="DateTimeInput">Date and Time</label>
     <input id="DateTimeInput" type="datetime-local" @bind="@events.DateTime" />
@@ -28,21 +28,27 @@
 
 
 @code {
-
+    [SupplyParameterFromForm]
     Events events { get; set; } = new Events();
 
-    public void HandleSubmit()
+    public void HandleSubmit(EditContext editContext)
     {
         // Logging for debugging
         Console.WriteLine($"Name: {events.Name}");
         Console.WriteLine($"Description: {events.Description}");
         Console.WriteLine($"DateTime: {events.DateTime}");
 
-        eventsService.Add(events);
+        if (string.IsNullOrEmpty(events.Name) || string.IsNullOrEmpty(events.Description))
+        {
+            Console.WriteLine("Either Name or Description is NULL or empty!");
+        }
+
+        var newEvent = (Events)editContext.Model;
+        eventsService.Add(newEvent);
 
         events = new Events(); //clears form
-    }
 
-
-    
+        //<DataAnnotationsValidator />
+        //<ValidationSummary />
+    } 
 }
