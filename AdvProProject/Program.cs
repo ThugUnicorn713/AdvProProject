@@ -41,7 +41,11 @@ namespace AdvProProject
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+           
             builder.Services.AddScoped<IService<Events>, EventsService>();
+            builder.Services.AddScoped<IService<Participants>, ParticipantsService>();
+            builder.Services.AddScoped<IService<Venues>, VenuesService>();
+            builder.Services.AddScoped<IService<Activities>, ActivitiesService>();
 
             builder.Services.AddDbContextFactory<ApplicationDbContext>((DbContextOptionsBuilder options) => options.UseSqlServer(connectionString));
 

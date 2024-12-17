@@ -1,0 +1,44 @@
+﻿@page "/Participants"
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Participants> participantsService
+
+<PageTitle>Participants View</PageTitle>
+
+<h3>Participants View</h3>
+
+
+<EditForm FormName="Form" Model=@participants OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="NameInput">Name</label>
+    <InputText id="NameInput" @bind-Value="@participants.Name"></InputText>
+
+    <label for="EmailInput">Email</label>
+    <InputText id="EmailInput" @bind-Value="@participants.Email"></InputText>
+
+    <button type="submit" class="btn-primary">Create</button>
+
+
+</EditForm>
+
+
+@code {
+    [SupplyParameterFromForm]
+    Participants participants { get; set; } = new Participants();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        // Logging for debugging
+        Console.WriteLine($"Name: {participants.Name}");
+        Console.WriteLine($"Email: {participants.Email}");
+
+        var newParticipant = (Participants)editContext.Model;
+        participantsService.Add(newParticipant);
+
+        participants = new Participants(); //clears form
+
+
+    }
+}

@@ -1,0 +1,70 @@
+﻿@page "/ActivitiesList"
+@rendermode InteractiveServer
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Activities> activitiesService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Activities List</PageTitle>
+
+<h3>Activities List</h3>
+
+<div class="col-4">
+    <div class="input-group mb-3 col-4">
+        <input class="form-control" type="text" @bind="searchText" placeholder="Search..." />
+        <div class="input-group-append">
+            <button class="btn btn-primary" @onclick="ApplyFilter">Search</button>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Game</th>
+            <th>Talk</th>
+            <th>WorkShop</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var activities in activities)
+        {
+            <tr>
+                <td>@activities.Id</td>
+                <td>@activities.Game</td>
+                <td>@activities.Talk</td>
+                <td>@activities.Workshop</td>
+                <td>@activities.Description</td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    List<Activities>? activities = new();
+
+    public string searchText;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ApplyFilter();
+    }
+
+    void ApplyFilter()
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            activities = activitiesService.GetAll();
+        }
+        else
+        {
+            activities = activitiesService.GetFilteredList(searchText);
+        }
+    }
+
+
+}

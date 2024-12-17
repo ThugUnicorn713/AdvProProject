@@ -5,45 +5,45 @@ using System.Linq;
 
 namespace AdvProProject.Services
 {
-    public class EventsService : IService<Events>
+    public class ParticipantsService : IService<Participants>
     {
         private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public EventsService(IDbContextFactory<ApplicationDbContext> contextFactory)
+        public ParticipantsService(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
             this.contextFactory = contextFactory;
         }
 
-        public void Add(Events record)
+        public void Add(Participants record)
         {
             using (var context = contextFactory.CreateDbContext())
             {
-                context.Events.Add(record);
+                context.Participants.Add(record);
                 context.SaveChanges();
             }
         }
 
-        public List<Events> GetAll()
-        {
-            using(var context = contextFactory.CreateDbContext())
-            {
-                return context.Events.ToList();
-            }
-        }
-
-        public Events GetByID(int id)
+        public List<Participants> GetAll()
         {
             using (var context = contextFactory.CreateDbContext())
             {
-                return context.Events.Find(id);
+                return context.Participants.ToList();
             }
         }
 
-        public void Update(Events updatedRecord)
+        public Participants GetByID(int id)
         {
             using (var context = contextFactory.CreateDbContext())
             {
-                context.Events.Update(updatedRecord);
+                return context.Participants.Find(id);
+            }
+        }
+
+        public void Update(Participants updatedRecord)
+        {
+            using (var context = contextFactory.CreateDbContext())
+            {
+                context.Participants.Update(updatedRecord);
                 context.SaveChanges();
             }
         }
@@ -52,23 +52,25 @@ namespace AdvProProject.Services
         {
             using (var context = contextFactory.CreateDbContext())
             {
-                var record = context.Events.Find(id);
+                var record = context.Participants.Find(id);
                 if (record != null)
                 {
-                    context.Events.Remove(record);
+                    context.Participants.Remove(record);
                     context.SaveChanges();
                 }
             }
         }
 
-        public void Delete(Events id)
+
+        public void Delete(Participants id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Events> GetFilteredList(string searchText)
+        public List<Participants> GetFilteredList(string searchText)
         {
             throw new NotImplementedException();
         }
     }
 }
+

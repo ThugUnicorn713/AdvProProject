@@ -1,0 +1,49 @@
+﻿@page "/Venues"
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Venues> venuesService
+
+
+<PageTitle>Venues View</PageTitle>
+
+<h3>Venues View</h3>
+
+<EditForm FormName="Form" Model=@venues OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="NameInput">Name</label>
+    <InputText id="NameInput" @bind-Value="@venues.Name"></InputText>
+
+    <label for="AddressInput">Address</label>
+    <InputText id="AddressInput" @bind-Value="@venues.Address"></InputText>
+
+    <label for="CapacityInput">Capacity</label>
+    <InputNumber id="CapacityInput" @bind-Value="@venues.Capacity"></InputNumber>
+
+    <button type="submit" class="btn-primary">Create</button>
+
+
+</EditForm>
+
+@code {
+   
+    [SupplyParameterFromForm]
+    Venues venues { get; set; } = new Venues();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        // Logging for debugging
+        Console.WriteLine($"Name: {venues.Name}");
+        Console.WriteLine($"Email: {venues.Address}");
+        Console.WriteLine($"Capacity: {venues.Capacity}");
+
+        var newVenue = (Venues)editContext.Model;
+        venuesService.Add(newVenue);
+
+        venues = new Venues(); //clears form
+
+
+    }
+
+}

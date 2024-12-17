@@ -1,0 +1,53 @@
+﻿@page "/ActivitiesEdit"
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Activities> activitiesService
+
+<PageTitle>Activities Edit View</PageTitle>
+
+<h3>Activities Edit View</h3>
+
+
+<EditForm FormName="Form" Model=@activities OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="GameInput">Game</label>
+    <InputText id="GameInput" @bind-Value="@activities.Game"></InputText>
+
+    <label for="TalkInput">Talk</label>
+    <InputText id="TalkInput" @bind-Value="@activities.Talk"></InputText>
+
+    <label for="WorkshopInput">Workshop</label>
+    <InputText id="WorkshopInput" @bind-Value="@activities.Workshop"></InputText>
+
+    <label for="DescriptInput">Description</label>
+    <InputText id="DescriptInput" @bind-Value="@activities.Description"></InputText>
+
+    <button type="submit" class="btn-primary">Create</button>
+
+
+</EditForm>
+
+@code {
+
+    [SupplyParameterFromForm]
+    Activities activities { get; set; } = new Activities();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        // Logging for debugging
+        Console.WriteLine($"Game: {activities.Game}");
+        Console.WriteLine($"Talk: {activities.Talk}");
+        Console.WriteLine($"Workshop: {activities.Workshop}");
+        Console.WriteLine($"Description: {activities.Description}");
+
+        var newActivities = (Activities)editContext.Model;
+        activitiesService.Add(newActivities);
+
+        activities = new Activities(); //clears form
+
+
+    }
+
+}

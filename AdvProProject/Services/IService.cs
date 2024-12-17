@@ -6,6 +6,8 @@
 
         public List<T> GetAll();
 
+        public List<T> GetFilteredList(string searchText);
+
         public void Add(T record);
 
         public void Update(T updatedRecord);
