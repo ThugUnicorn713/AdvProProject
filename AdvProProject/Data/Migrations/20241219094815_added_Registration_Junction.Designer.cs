@@ -4,6 +4,7 @@ using AdvProProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdvProProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219094815_added_Registration_Junction")]
+    partial class added_Registration_Junction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace AdvProProject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ActivitiesEvents", b =>
-                {
-                    b.Property<int>("ActivitiesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ActivitiesId", "EventsId");
-
-                    b.HasIndex("EventsId");
-
-                    b.ToTable("ActivitiesEvents");
-                });
 
             modelBuilder.Entity("AdvProProject.Data.ApplicationUser", b =>
                 {
@@ -220,17 +208,12 @@ namespace AdvProProject.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EventsId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventsId");
 
                     b.ToTable("Venues");
                 });
@@ -368,46 +351,16 @@ namespace AdvProProject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ParticipantEvent", b =>
-                {
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParticipantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventId", "ParticipantId");
-
-                    b.HasIndex("ParticipantId");
-
-                    b.ToTable("ParticipantEvent");
-                });
-
-            modelBuilder.Entity("ActivitiesEvents", b =>
-                {
-                    b.HasOne("AdvProProject.Data.Models.Activities", null)
-                        .WithMany()
-                        .HasForeignKey("ActivitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AdvProProject.Data.Models.Events", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AdvProProject.Data.Models.Registration", b =>
                 {
                     b.HasOne("AdvProProject.Data.Models.Events", "Event")
-                        .WithMany("Registries")
+                        .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AdvProProject.Data.Models.Participants", "Participant")
-                        .WithMany("Registries")
+                        .WithMany()
                         .HasForeignKey("ParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -415,13 +368,6 @@ namespace AdvProProject.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("Participant");
-                });
-
-            modelBuilder.Entity("AdvProProject.Data.Models.Venues", b =>
-                {
-                    b.HasOne("AdvProProject.Data.Models.Events", null)
-                        .WithMany("Venues")
-                        .HasForeignKey("EventsId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -473,33 +419,6 @@ namespace AdvProProject.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ParticipantEvent", b =>
-                {
-                    b.HasOne("AdvProProject.Data.Models.Events", null)
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AdvProProject.Data.Models.Participants", null)
-                        .WithMany()
-                        .HasForeignKey("ParticipantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AdvProProject.Data.Models.Events", b =>
-                {
-                    b.Navigation("Registries");
-
-                    b.Navigation("Venues");
-                });
-
-            modelBuilder.Entity("AdvProProject.Data.Models.Participants", b =>
-                {
-                    b.Navigation("Registries");
                 });
 #pragma warning restore 612, 618
         }

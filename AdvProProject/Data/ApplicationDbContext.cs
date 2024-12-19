@@ -13,5 +13,23 @@ namespace AdvProProject.Data
         public DbSet<Venues> Venues { get; set; }
 
         public DbSet<Activities> Activities { get; set; }
+
+        public DbSet<Registration> Registration { get; set; }
+
+        
+        // Configure MtoM Relationship
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            
+            modelBuilder.Entity<Participants>()
+                .HasMany(p => p.Events)
+                .WithMany(e => e.Participants)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ParticipantEvent",
+                    j => j.HasOne<Events>().WithMany().HasForeignKey("EventId"),
+                    j => j.HasOne<Participants>().WithMany().HasForeignKey("ParticipantId"));
+        }
     }
 }

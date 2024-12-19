@@ -46,6 +46,7 @@ namespace AdvProProject
             builder.Services.AddScoped<IService<Participants>, ParticipantsService>();
             builder.Services.AddScoped<IService<Venues>, VenuesService>();
             builder.Services.AddScoped<IService<Activities>, ActivitiesService>();
+            builder.Services.AddScoped<IService<Registration>, RegistrationService>();
 
             builder.Services.AddDbContextFactory<ApplicationDbContext>((DbContextOptionsBuilder options) => options.UseSqlServer(connectionString));
 

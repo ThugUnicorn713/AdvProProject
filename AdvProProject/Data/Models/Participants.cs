@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace AdvProProject.Data.Models
 {
@@ -16,6 +17,15 @@ namespace AdvProProject.Data.Models
         [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters.")]
         public string Email { get; set; }
 
+        //public int? EventId { get; set; }
+
+        //public Events? Event {  get; set; } 
+
+        [JsonIgnore]
+        public ICollection<Registration> Registries { get; set; } = new List<Registration>();
+
+        [JsonIgnore]
+        public ICollection<Events> Events { get; set; } = new List<Events>();
 
     }
 }
