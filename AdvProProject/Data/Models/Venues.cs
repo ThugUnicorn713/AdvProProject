@@ -18,5 +18,9 @@ namespace AdvProProject.Data.Models
 
         [Required(ErrorMessage = "Capacity is required.")]
         public int Capacity { get; set; }
+
+        public int? EventId { get; set; }
+
+        public Events? Event { get; set; }
     }
 }

@@ -3,6 +3,8 @@
 @using AdvProProject.Services;
 @inject IService<Events> eventsService
 
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
 <PageTitle>Events View</PageTitle>
 
 <h3>Events View</h3>

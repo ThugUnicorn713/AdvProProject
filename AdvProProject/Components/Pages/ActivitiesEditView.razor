@@ -3,6 +3,8 @@
 @using AdvProProject.Services;
 @inject IService<Activities> activitiesService
 
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
 <PageTitle>Activities Edit View</PageTitle>
 
 <h3>Activities Edit View</h3>
