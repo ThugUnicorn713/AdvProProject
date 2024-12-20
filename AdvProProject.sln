@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvProProject", "AdvProProject\AdvProProject.csproj", "{22AB985A-61AA-43C9-BC60-892F480B9DFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazerTestProject", "BlazerTestProject\BlazerTestProject.csproj", "{C4CDF2BA-5B27-47A3-B4C7-F7C0721014E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{22AB985A-61AA-43C9-BC60-892F480B9DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22AB985A-61AA-43C9-BC60-892F480B9DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22AB985A-61AA-43C9-BC60-892F480B9DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4CDF2BA-5B27-47A3-B4C7-F7C0721014E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4CDF2BA-5B27-47A3-B4C7-F7C0721014E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4CDF2BA-5B27-47A3-B4C7-F7C0721014E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4CDF2BA-5B27-47A3-B4C7-F7C0721014E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

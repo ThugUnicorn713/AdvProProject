@@ -32,11 +32,11 @@
 
 @code {
     [SupplyParameterFromForm]
-    Events events { get; set; } = new Events();
+     internal Events events { get; set; } = new Events();
 
     public void HandleSubmit(EditContext editContext)
     {
-        // Logging for debugging
+        // Made this a Unit test as well
         Console.WriteLine($"Name: {events.Name}");
         Console.WriteLine($"Description: {events.Description}");
         Console.WriteLine($"DateTime: {events.DateTime}");
@@ -51,6 +51,6 @@
 
         events = new Events(); //clears form
 
-        
+
     } 
 }
