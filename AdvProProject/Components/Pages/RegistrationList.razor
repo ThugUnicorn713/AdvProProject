@@ -1,0 +1,67 @@
+﻿@page "/RegistrationList"
+@rendermode InteractiveServer
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Registration> registrationService
+
+<PageTitle>Registrations</PageTitle>
+
+<h3>Registrations</h3>
+
+<div class="col-4">
+    <div class="input-group mb-3 col-4">
+        <input class="form-control" type="text" @bind="searchText" placeholder="Search..." />
+        <div class="input-group-append">
+            <button class="btn btn-primary" @onclick="ApplyFilter">Search</button>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Participant ID</th>
+            <th>Event ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var records in records)
+        {
+            <tr>
+                <td>@records.ParticipantId</td>
+                <td>@records.EventId</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+
+    List<Registration>? records = new();
+
+    public string searchText;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ApplyFilter();
+    }
+
+    void ApplyFilter()
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            records = registrationService.GetAll();
+        }
+        else
+        {
+            records = registrationService.GetFilteredList(searchText);
+        }
+    }
+
+
+
+
+}

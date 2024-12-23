@@ -3,9 +3,11 @@
 @using AdvProProject.Services;
 @inject IService<Participants> participantsService
 
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
 <PageTitle>Participants View</PageTitle>
 
-<h3>Participants View</h3>
+<h3>Participants Edit</h3>
 
 
 <EditForm FormName="Form" Model=@participants OnValidSubmit="HandleSubmit">

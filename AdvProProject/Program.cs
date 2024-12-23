@@ -6,6 +6,7 @@ using AdvProProject.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace AdvProProject
 {
@@ -41,8 +42,15 @@ namespace AdvProProject
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddControllersWithViews()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+
+
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-           
+            builder.Services.AddHttpClient();
             builder.Services.AddScoped<IService<Events>, EventsService>();
             builder.Services.AddScoped<IService<Participants>, ParticipantsService>();
             builder.Services.AddScoped<IService<Venues>, VenuesService>();

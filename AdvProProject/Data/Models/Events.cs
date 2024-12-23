@@ -18,13 +18,16 @@ namespace AdvProProject.Data.Models
         [Required(ErrorMessage = "Description is required.")]
         [StringLength(1000, ErrorMessage = " Description cannot exceed 1000 characters.")]
         public string Description { get; set; }
-        public int? ActivityId { get; set; }
+        public string? Venue { get; set; }
+        public string? Activity { get; set; }
 
         [JsonIgnore]
         public ICollection<Registration> Registries { get; set; } = new List<Registration>();
         [JsonIgnore]
         public ICollection<Participants> Participants { get; set; } = new List<Participants>();
+        [JsonIgnore]
         public ICollection<Venues> Venues { get; set; } = new List<Venues>();
+        [JsonIgnore]
         public ICollection<Activities> Activities { get; set; } = new List<Activities>();
     }
 }

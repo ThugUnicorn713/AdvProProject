@@ -2,55 +2,66 @@
 @using AdvProProject.Data.Models;
 @using AdvProProject.Services;
 @inject IService<Events> eventsService
+@inject HttpClient Http;
+@inject NavigationManager NavigationManager
 
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
 <PageTitle>Events View</PageTitle>
 
-<h3>Events View</h3>
+<h3>Events Edit</h3>
 
 
-<EditForm FormName="Form" Model=@events OnValidSubmit="HandleSubmit">
+<EditForm FormName="Form" Model=@eventsDto OnSubmit="HandleSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
+
     <label for="NameInput">Name</label>
-    <InputText id="NameInput" @bind-Value="@events.Name"></InputText>
+    <InputText id="NameInput" @bind-Value="@eventsDto.Name"></InputText>
 
     <label for="DescriptInput">Description</label>
-    <InputText id="DescriptInput" @bind-Value="@events.Description"></InputText>
-
+    <InputText id="DescriptInput" @bind-Value="@eventsDto.Description"></InputText>
 
     <label for="DateTimeInput">Date and Time</label>
-    <input id="DateTimeInput" type="datetime-local" @bind="@events.DateTime" />
+    <input id="DateTimeInput" type="datetime-local" @bind="@eventsDto.DateTime" />
+
+    <label for="VenueInput">Venue</label>
+    <InputText id="VenueInput" @bind-Value="@eventsDto.Venue"></InputText>
+
+    <label for="ActivityInput">Activities</label>
+    <InputText id="ActivityInput" @bind-Value="@eventsDto.Activity"></InputText>
 
     <button type="submit" class="btn-primary">Create</button>
-
 
 </EditForm>
 
 
+
 @code {
     [SupplyParameterFromForm]
-     internal Events events { get; set; } = new Events();
 
-    public void HandleSubmit(EditContext editContext)
+    EventsDTO eventsDto { get; set; } = new EventsDTO();
+
+    public void HandleSubmit() 
     {
-        // Made this a Unit test as well
-        Console.WriteLine($"Name: {events.Name}");
-        Console.WriteLine($"Description: {events.Description}");
-        Console.WriteLine($"DateTime: {events.DateTime}");
+        Console.WriteLine($"Name: {eventsDto.Name}");
+        Console.WriteLine($"Description: {eventsDto.Description}");
 
-        if (string.IsNullOrEmpty(events.Name) || string.IsNullOrEmpty(events.Description))
+        var newEvent = new Events
         {
-            Console.WriteLine("Either Name or Description is NULL or empty!");
-        }
+                Name = eventsDto.Name,
+                Description = eventsDto.Description,
+                DateTime = eventsDto.DateTime,
+                Venue = eventsDto.Venue,
+                Activity = eventsDto.Activity
+        };
 
-        var newEvent = (Events)editContext.Model;
         eventsService.Add(newEvent);
 
-        events = new Events(); //clears form
+        eventsDto = new EventsDTO(); //clears form
+    }
 
 
-    } 
+
 }

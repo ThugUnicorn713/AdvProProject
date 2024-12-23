@@ -1,0 +1,74 @@
+﻿@page "/EventsList"
+@rendermode InteractiveServer
+@using AdvProProject.Data.Models;
+@using AdvProProject.Services;
+@inject IService<Events> eventsService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Events List</PageTitle>
+
+<h3>Events List</h3>
+
+<div class="col-4">
+    <div class="input-group mb-3 col-4">
+        <input class="form-control" type="text" @bind="searchText" placeholder="Search..." />
+        <div class="input-group-append">
+            <button class="btn btn-primary" @onclick="ApplyFilter">Search</button>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var events in events)
+        {
+            <tr>
+                <td>@events.Id</td>
+                <td>@events.Name</td>
+                <td>@events.Description</td>
+                <td>@events.DateTime</td>
+                <td>@events.Venue</td>
+                <td>@events.Activity</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    
+    List<Events>? events = new();
+
+    public string searchText;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ApplyFilter();
+    }
+
+    void ApplyFilter()
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            events = eventsService.GetAll();
+        }
+        else
+        {
+            events = eventsService.GetFilteredList(searchText);
+        }
+    }
+
+
+    
+
+}

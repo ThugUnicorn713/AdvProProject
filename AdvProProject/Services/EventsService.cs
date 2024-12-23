@@ -27,7 +27,12 @@ namespace AdvProProject.Services
         {
             using(var context = contextFactory.CreateDbContext())
             {
-                return context.Events.ToList();
+                return context.Events.
+                    Include(e => e.Registries)
+                   .Include(e => e.Participants)
+                   .Include(e => e.Venues)
+                   .Include(e => e.Activities)
+                   .ToList();
             }
         }
 

@@ -3,10 +3,11 @@
 @using AdvProProject.Services;
 @inject IService<Venues> venuesService
 
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
 <PageTitle>Venues View</PageTitle>
 
-<h3>Venues View</h3>
+<h3>Venues Edit</h3>
 
 <EditForm FormName="Form" Model=@venues OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
